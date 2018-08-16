@@ -20,15 +20,15 @@ def lambda_handler(event, context):
 
     s3.download_file(bucket, key, "/tmp/{}".format(key))
 
-
     new_item = {
-        'id': uuid.uuid4().hex
+        'id': uuid.uuid4().hex,
+        's3_bucket': bucket,
+        's3_key': key
     }
 
     exif_dict = piexif.load("/tmp/{}".format(key))
     for ifd in ("0th", "Exif", "GPS", "1st"):
         for tag in exif_dict[ifd]:
-            #print(piexif.TAGS[ifd][tag]["name"], exif_dict[ifd][tag])
 
             key = piexif.TAGS[ifd][tag]["name"]
             value = exif_dict[ifd][tag]
@@ -41,5 +41,4 @@ def lambda_handler(event, context):
                 pass
 
     print(new_item)
-
     table.put_item(Item=new_item)

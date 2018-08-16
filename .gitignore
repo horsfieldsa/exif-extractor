@@ -3,6 +3,7 @@
 
 deploy.sh
 build.sh
+packaged.yaml
 
 ### Linux ###
 *~

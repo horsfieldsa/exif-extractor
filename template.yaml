@@ -29,7 +29,7 @@ Resources:
                     BucketName: !Ref BucketName
             Environment: 
                Variables:
-                METADATA_TABLE: !Ref MetadataTable
+                    METADATA_TABLE: !Ref MetadataTable
             Events:
                 Image:
                   Type: S3

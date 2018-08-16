@@ -36,8 +36,12 @@ def lambda_handler(event, context):
             try:
                 value = value.decode('utf-8')
                 new_item[key] = value
-            except (AttributeError, UnicodeDecodeError) as e:
-                print(e)
+            except AttributeError as e:
+                new_item[key] = str(value)
+                print("{} - {} - {}".format(key, value, e))
+                pass
+            except UnicodeDecodeError as e: 
+                print("{} - {} - {}".format(key, value, e))
                 pass
 
     print(new_item)

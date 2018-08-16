@@ -21,7 +21,7 @@ Outputs:
 Resources:
   ExtractorFunction:
     Properties:
-      CodeUri: s3://shhorsfi-sam-deploy/dad2cb06cf3f62e74d99a5e1fcdb50d6
+      CodeUri: s3://shhorsfi-sam-deploy/8ed4be56062344f35ee54a96499e9eaf
       Environment:
         Variables:
           METADATA_TABLE:

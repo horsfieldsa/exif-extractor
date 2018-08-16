@@ -17,16 +17,17 @@ pip install -r requirements.txt -t extractor/build/
 cp extractor/*.py extractor/build/
 ```
 
-To deploy the function, update the following commands as needed to replace <YOUR_S3_BUCKET> with an S3 bucket in your account. This bucket is used by SAM for packaging artifacts.
+To deploy the function, update the following commands as needed to replace <YOUR_S3_BUCKET_FOR_PACKAGING> with an S3 bucket in your account. This bucket is used by SAM for packaging artifacts. You'll also need to replace <S3_BUCKET_TO_CREATE_FOR_IMAGES> with then ame of the bucket you want to create as a destination for the images you upload.
 
 ```
 sam package \
     --template-file template.yaml \
     --output-template-file packaged.yaml \
-    --s3-bucket <YOUR_S3_BUCKET>
+    --s3-bucket <YOUR_S3_BUCKET_FOR_PACKAGING>
 
 sam deploy \
     --template-file packaged.yaml \
     --stack-name exif-extrator \
     --capabilities CAPABILITY_IAM
+    --parameter-overrides BucketName=<S3_BUCKET_TO_CREATE_FOR_IMAGES>
 ```

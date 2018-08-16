@@ -3,8 +3,14 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
     exif-extrator
 
-    Extracts exif data from images uploaded to S3 Bucket and data in a DynamoDB Table
+    Extracts exif data from images uploaded to S3 Bucket and data in a DynamoDB Table. When you deploy this application
+    you will provide a bucket name to be created where images will be uploaded. Once images are uploaded an event will trigger
+    a Lambda function which will extract EXIF data from the image, and insert it into a DynamoDB table.
     
+Parameters:
+    BucketName:
+        Type: String
+
 Globals:
     Function:
         Timeout: 30
@@ -19,17 +25,13 @@ Resources:
             Policies:
                - DynamoDBCrudPolicy:
                     TableName: !Ref MetadataTable
-               - Version: '2012-10-17'
-                 Statement:
-                  - Effect: Allow
-                    Action:
-                      - 's3:GetObject'
-                    Resource: 'arn:aws:s3:::*'
+               - S3CrudPolicy:
+                    BucketName: !Ref BucketName
             Environment: 
                Variables:
                 METADATA_TABLE: !Ref MetadataTable
             Events:
-                PhotoUpload:
+                Image:
                   Type: S3
                   Properties:
                     Bucket: !Ref ImageBucket
@@ -39,7 +41,9 @@ Resources:
         Type: AWS::Serverless::SimpleTable
 
     ImageBucket:
-        Type: AWS::S3::Bucket        
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: !Ref BucketName     
 
 Outputs:
 

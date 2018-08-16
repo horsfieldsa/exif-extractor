@@ -1,6 +1,6 @@
 # exif-extractor
 
-Lambda Function to extract EXIF data from images uploaded to an S3 bucket and store them in S3.
+Lambda Function to extract EXIF data from images uploaded to an S3 bucket and store it in DynamoDB.
 
 Flow:
 [Image Uploaded To S3] -> [S3 Bucket] -> [Event Notification] -> [Lambda Function] -> [DynamoDB]
